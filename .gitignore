@@ -1,3 +1,5 @@
+## DJANGO ##
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -158,3 +160,33 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+## ELECTRONJS ##
+
+# Node modules
+/node_modules
+
+# Arquivos de compilação
+/dist
+
+# Arquivos de log
+*.log
+
+# Arquivos temporários
+*.tmp
+
+# Arquivos de configuração de IDEs
+.vscode
+.idea
+
+# Cache de dependências do npm
+.npm
+
+# Arquivos de dependências
+package-lock.json
+
+# Arquivos de build do macOS
+.DS_Store
+
+# Arquivos de backup
+*~
