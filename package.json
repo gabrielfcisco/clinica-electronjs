@@ -1,0 +1,15 @@
+{
+  "name": "clinica-electron",
+  "version": "1.0.0",
+  "description": "Login system built with ElectronJS for the frontend and Django for the backend API. It allows users to register, login, and manage their profiles, including automatic address retrieval based on the provided ZIP code.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^30.0.1"
+  }
+}
