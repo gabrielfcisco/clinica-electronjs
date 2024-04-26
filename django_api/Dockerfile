@@ -14,7 +14,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copie o conteúdo do diretório atual para o diretório de trabalho no container
-COPY . .
+COPY api/ .
 
 
 # Exponha a porta 8000
