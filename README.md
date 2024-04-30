@@ -14,7 +14,7 @@ This project is a login system built with ElectronJS for the frontend and Django
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/gabrielfcisco/clinica-electronjs.git
+   git clone https://github.com/gabrielfcisco/login-electronjs.git
    ```
 2. **Install dependencies:**
 
@@ -37,8 +37,7 @@ This project is a login system built with ElectronJS for the frontend and Django
 
      ```bash
      cd django_api
-     docker build -t django-api .
-     docker run -p 8000:8000 django-api
+     docker compose up -d
      ```
 
 4. **Access the application:**
@@ -53,7 +52,7 @@ npm test
 ```
 - For Django API tests:
 ```bash
-cd django_api
+docker exec -it api bash
 python manage.py test
 ```
 
