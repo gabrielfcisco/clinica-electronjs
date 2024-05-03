@@ -1,102 +1,48 @@
 from django.test import TestCase
-from core.models import Aluno, Professor, Curso, Materia
+from core.models import CustomUser
 from django.urls import reverse
+from django.test import Client
 
-class AlunoTestCase(TestCase):
+class CustomUserTestCase(TestCase):
     def setUp(self):
-        self.aluno = Aluno.objects.create(nome="Gabriel Sousa", idade=19)
+        self.user = CustomUser.objects.create(nome="Gabriel", sobrenome="pereira", cep="13806064", cidade="mogi mirim", uf="SP",
+                                            endereco="rua rachid ajub andare", numero="111", bairro="Conjunto Residencial Anselmo Lopes Bueno")
 
-    def testAluno(self):
-        self.assertEqual(self.aluno.nome, "Gabriel Sousa")
-        self.assertEqual(self.aluno.idade, 19)
+    def testUser(self):
+        self.assertEqual(self.user.nome, "Gabriel")
+        self.assertEqual(self.user.sobrenome, "pereira")
+        self.assertEqual(self.user.cep, "13806064")
+        self.assertEqual(self.user.cidade, "mogi mirim")
+        self.assertEqual(self.user.uf, "SP")
+        self.assertEqual(self.user.endereco, "rua rachid ajub andare")
+        self.assertEqual(self.user.numero, "111")
+        self.assertEqual(self.user.bairro, "Conjunto Residencial Anselmo Lopes Bueno")
 
-    def testAlunoGet(self):
-        response = self.client.get(reverse('home'))
+    def testUserGet(self):
+        c = Client()
+        c.login(username="heitorscheidt", password="1234")
+        response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
 
-    def testAlunoCreate(self):
-        data = {"nome": self.aluno.nome, "idade": self.aluno.idade}
-        response = self.client.post(reverse('salvar_aluno'), data)
-        self.assertRedirects(response, reverse('home'))
+    def testUserCreate(self):
+        c = Client()
+        c.login(username="heitorscheidt", password="1234")
+        data = {"nome": self.user.nome, "sobrenome": self.user.sobrenome, "cep":self.user.cep, "cidade": self.user.cidade, "uf":self.user.uf,
+                "endereco":self.user.endereco, "numero":self.user.numero, "bairro":self.user.bairro}
+        response = self.client.post(reverse('cadastrar'), data)
+        self.assertRedirects(response, 'index',status_code=302, target_status_code=200, fetch_redirect_response=True)
 
-    def testAlunoEdit(self):
-        response = self.client.get(reverse('editar_aluno', args=[self.aluno.pk]))
+    def testuserEdit(self):
+        c = Client()
+        c.login(username="heitorscheidt", password="1234")
+        response = self.client.get(reverse('edit_user', args=[self.user.pk]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['aluno'], self.aluno)
+        self.assertEqual(response.context['user'], self.user)
 
-    def testAlunoDelete(self):
-        response = self.client.post(reverse('delete_aluno', args=[self.aluno.pk]))
-        self.assertFalse(Aluno.objects.filter(pk=self.aluno.pk).exists())
+    def testUserDelete(self):
+        c = Client()
+        c.login(username="heitorscheidt", password="1234")
+        response = self.client.post(reverse('delete_user', args=[self.user.pk]))
+        self.assertFalse(CustomUser.objects.filter(pk=self.user.pk).exists())
         self.assertRedirects(response, reverse('home'))
 
-class ProfessorTestCase(TestCase):
-    def setUp(self):
-        self.professor = Professor.objects.create(nome="Leonardo Simões", idade=35)
-
-    def testProfessor(self):
-        self.assertEqual(self.professor.nome, "Leonardo Simões")
-        self.assertEqual(self.professor.idade, 35)
-
-    def testProfessorGet(self):
-        response = self.client.get(reverse('home'))
-        self.assertEqual(response.status_code, 200)
-
-    def testProfessorCreate(self):
-        data = {"nome": self.professor.nome, "idade": self.professor.idade}
-        response = self.client.post(reverse('salvar_professor'), data)
-        self.assertRedirects(response, reverse('home'))
-
-    def testProfessorEdit(self):
-        response = self.client.get(reverse('editar_professor', args=[self.professor.pk]))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['professor'], self.professor)
-
-    def testProfessorDelete(self):
-        response = self.client.post(reverse('delete_professor', args=[self.professor.pk]))
-        self.assertFalse(Professor.objects.filter(pk=self.professor.pk).exists())
-        self.assertRedirects(response, reverse('home'))
-
-
-class MateriaTestCase(TestCase):
-    def setUp(self):
-        self.materia = Materia.objects.create(nome="Análise de Algoritmos")
-
-    def testMateria(self):
-        self.assertEqual(self.materia.nome, "Análise de Algoritmos")
-
-    def testMateriaCreate(self):
-        data = {"nome": self.materia.nome}
-        response = self.client.post(reverse('salvar_materia'), data)
-        self.assertRedirects(response, reverse('home'))
-
-    def testMateriaEdit(self):
-        response = self.client.get(reverse('editar_materia', args=[self.materia.pk]))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['materia'], self.materia)
-
-    def testMateriaDelete(self):
-        response = self.client.post(reverse('delete_materia', args=[self.materia.pk]))
-        self.assertFalse(Materia.objects.filter(pk=self.materia.pk).exists())
-        self.assertRedirects(response, reverse('home'))
-
-class CursoTestCase(TestCase):
-    def setUp(self):
-        self.curso = Curso.objects.create(nome="Engenharia de Alimentos")
-
-    def testCurso(self):
-        self.assertEqual(self.curso.nome, "Engenharia de Alimentos")
-
-    def testCursoCreate(self):
-        data = {"nome": self.curso.nome}
-        response = self.client.post(reverse('salvar_curso'), data)
-        self.assertRedirects(response, reverse('home'))
-
-    def testCursoEdit(self):
-        response = self.client.get(reverse('editar_curso', args=[self.curso.pk]))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['curso'], self.curso)
-
-    def testCursoDelete(self):
-        response = self.client.post(reverse('delete_curso', args=[self.curso.pk]))
-        self.assertFalse(Curso.objects.filter(pk=self.curso.pk).exists())
-        self.assertRedirects(response, reverse('home'))
