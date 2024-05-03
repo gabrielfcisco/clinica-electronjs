@@ -3,6 +3,8 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('cadastrar', cadastrar_usuario, name="cadastrar_usuario"),
+    path('cadastrar', cadastrar, name="cadastrar"),
     path('index', index, name="index"),
+    path('', login, name="login"),
+    path('logout', logout, name="logout"),
 ]
