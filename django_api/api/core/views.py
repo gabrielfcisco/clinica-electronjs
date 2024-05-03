@@ -46,6 +46,10 @@ def getUsers(request):
     return render(request, 'index.html', {'users': users})
 
 def editUsers(request, user_id):
+    if not request.user.is_authenticated:
+        # Se o usuário não estiver autenticado, redirecione-o para a página de login
+        return redirect(reverse('login'))
+
     # Recupere o usuário existente pelo ID
     user = get_object_or_404(CustomUser, pk=user_id)
 
