@@ -21,7 +21,7 @@ This project is a login system built with ElectronJS for the frontend and Django
     - Navigate to the project directory and install Node.js dependencies:
     
         ```bash
-        cd electron
+        cd login-electron/electron
         npm install
         ```
 
