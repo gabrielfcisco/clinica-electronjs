@@ -5,56 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Usuários</title>
     <style>
-        /* Estilos CSS existentes aqui */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-        /* Estilos adicionais para a lista de usuários */
-        .user-list {
-            margin-top: 20px;
+        .container {
             max-width: 600px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .user-list {
             background-color: #fff;
-            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
         .user-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .user-item strong {
+            font-weight: bold;
+            color: #333;
         }
 
         .user-actions {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .user-actions form {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .user-actions button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-actions button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
         }
     </style>
 </head>
 <body>
 
-<div class="user-list">
-    <h2>Lista de Usuários</h2>
-    {% for user in users %}
-    <div class="user-item">
-        <div>
-            <strong>Nome:</strong> {{ user.nome }} {{ user.sobrenome }}<br>
-            <strong>CEP:</strong> {{ user.cep }}<br>
-            <strong>Endereço:</strong> {{ user.endereco }}, {{ user.numero }} - {{ user.bairro }} - {{ user.cidade }}/{{ user.uf }}
-        </div>
+<div class="container">
+    <div class="user-list">
         <div class="user-actions">
-            <form method="post" action="{% url 'delete_user' user.id %}">
-                {% csrf_token %}
-                <input type="submit" value="Delete">
-            </form>
-            <a href="{% url 'edit_user' user.id %}"><button>Editar</button></a>
+            <a href="{% url 'cadastrar' %}">Cadastrar</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
+        <h2>Lista de Usuários</h2>
+        {% for user in users %}
+        <div class="user-item">
+            <div>
+                <strong>Nome:</strong> {{ user.nome }} {{ user.sobrenome }}<br>
+                <strong>CEP:</strong> {{ user.cep }}<br>
+                <strong>Endereço:</strong> {{ user.endereco }}, {{ user.numero }} - {{ user.bairro }} - {{ user.cidade }}/{{ user.uf }}
+            </div>
+            <div class="user-actions">
+                <form method="post" action="{% url 'delete_user' user.id %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Excluir">
+                </form>
+                <a href="{% url 'edit_user' user.id %}">Editar</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
-<a href="{% url 'logout' %}">Logout</a>
 
 <script>
     function deleteUser(userId) {
