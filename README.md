@@ -45,7 +45,9 @@ This project is a login system built with ElectronJS for the frontend and Django
 
 5. **Access the application:**
 
-   - Open your web browser and navigate to [http://localhost:8000](http://localhost:8000) to access the ElectronJS application.
+   - Open your web browser and navigate to [http://localhost:8000](http://localhost:8000) or access the ElectronJS application.
+   - user: root
+   - password: root1234
 
 ## Testing
 To run tests, execute the following commands:
