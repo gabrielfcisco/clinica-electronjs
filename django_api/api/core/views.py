@@ -6,7 +6,19 @@ from django.contrib.auth import authenticate, login, logout
 def index(request):
     return render(request, 'index.html')
 
-def cadastrar_usuario(request):
+def login(request):
+    if request.method == 'POST':
+        name = request.POST.get('rname')
+        password = request.POST.get('password')
+        user = authenticate(name=name, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            return render(request, 'login.html', {'error': 'Detalhes de login inválidos.'})
+    return render(request, 'login.html')
+                  
+def cadastrar(request):
     if request.method == "POST":
         form_usuario = UserCreationForm(request.POST)
         if form_usuario.is_valid():
