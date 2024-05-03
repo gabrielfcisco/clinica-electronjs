@@ -74,7 +74,6 @@ def delete_user(request, user_id):
     
     if request.method == 'POST':
         user.delete()
-        print("Usuário excluído com sucesso:", user_id)
         return redirect('index')
 
     return render(request, 'index.html', {'user': user})

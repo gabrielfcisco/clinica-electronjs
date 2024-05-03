@@ -21,7 +21,7 @@ This project is a login system built with ElectronJS for the frontend and Django
     - Navigate to the project directory and install Node.js dependencies:
     
         ```bash
-        cd clinica-electronjs
+        cd electron
         npm install
         ```
 
@@ -37,7 +37,7 @@ This project is a login system built with ElectronJS for the frontend and Django
 
      ```bash
      cd django_api
-     docker compose up -d
+     docker compose up -d --build
      ```
 
 4. **Access the application:**
