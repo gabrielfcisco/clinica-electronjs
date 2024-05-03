@@ -17,6 +17,10 @@ def login(request):
         else:
             return render(request, 'login.html', {'error': 'Detalhes de login inválidos.'})
     return render(request, 'login.html')
+
+def logout(request):
+    logout(request)
+    return redirect('login')  # Substitua 'página_inicial' pelo nome da sua URL inicial
                   
 def cadastrar(request):
     if request.method == "POST":

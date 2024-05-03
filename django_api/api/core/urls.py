@@ -6,4 +6,5 @@ urlpatterns = [
     path('cadastrar', cadastrar, name="cadastrar"),
     path('index', index, name="index"),
     path('', login, name="login"),
+    path('logout', logout, name="logout"),
 ]

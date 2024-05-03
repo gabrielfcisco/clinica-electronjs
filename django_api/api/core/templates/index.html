@@ -2,10 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Página do index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área Logada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .logout-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<h1>Página protegida</h1>
-
+<div class="container">
+    <h1>Você está logado!</h1>
+    <p>Bem-vindo à sua área logada. O que você gostaria de fazer a seguir?</p>
+    <a href="#" class="logout-btn">Sair</a>
+</div>
 </body>
 </html>
