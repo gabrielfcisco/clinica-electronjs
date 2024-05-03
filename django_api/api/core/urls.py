@@ -5,6 +5,6 @@ from .views import *
 urlpatterns = [
     path('cadastrar', cadastrar, name="cadastrar"),
     path('index', index, name="index"),
-    path('', login, name="login"),
-    path('logout', logout, name="logout"),
+    path('', loginUser, name="login"),
+    path('logout', logoutUser, name="logout"),
 ]

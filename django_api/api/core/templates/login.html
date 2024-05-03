@@ -72,10 +72,13 @@
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <h2>Login</h2>
-        <label for="name">Username:</label><br>
-        <input type="name" id="name" name="name" required><br>
+        <label for="username">Username:</label><br>
+        <input type="name" id="username" name="username" required><br>
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required><br><br>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
         <button type="submit">Login</button>
         <p>Don't have an account? <a href="{% url 'cadastrar' %}">Sign up</a></p>
     </form>
