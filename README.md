@@ -38,6 +38,9 @@ This project is a login system built with ElectronJS for the frontend and Django
      ```bash
      cd django_api
      docker compose up -d --build
+     docker exec -it api bash
+     python manage.py makemigrations core
+     python manage.py migrate
      ```
 
 4. **Access the application:**
