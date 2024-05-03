@@ -11,6 +11,6 @@ class CustomUser(AbstractUser):
     #bairro = models.CharField(max_length=100, blank=False)
     #cidade = models.CharField(max_length=100, blank=False)
     #uf = models.CharField(max_length=2, blank=False)
-
+######
     def __str__(self):
         return self.username
