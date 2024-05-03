@@ -1,8 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
+from django import forms
 from core.models import CustomUser
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+class CustomUserCreationForm(forms.ModelForm):
+    class Meta:
         model = CustomUser
-        fields = ('username', 'password1', 'password2')
-#, 'nome', 'sobrenome', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'uf'
+        fields = ['nome', 'sobrenome', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'uf']
