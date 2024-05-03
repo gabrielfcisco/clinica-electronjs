@@ -26,13 +26,7 @@ This project is a login system built with ElectronJS for the frontend and Django
         ```
 
 3. **Run the application:**
-
-   - Start the ElectronJS application:
-
-     ```bash
-     npm start
-     ```
-
+   
    - Build and run the Django API using Docker:
 
      ```bash
@@ -43,7 +37,13 @@ This project is a login system built with ElectronJS for the frontend and Django
      python manage.py migrate
      ```
 
-4. **Access the application:**
+   - Start the ElectronJS application:
+
+     ```bash
+     npm start
+     ```
+
+5. **Access the application:**
 
    - Open your web browser and navigate to [http://localhost:8000](http://localhost:8000) to access the ElectronJS application.
 
