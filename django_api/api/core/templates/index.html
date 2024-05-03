@@ -3,57 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área Logada</title>
+    <title>Lista de Usuários</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* Estilos CSS existentes aqui */
+
+        /* Estilos adicionais para a lista de usuários */
+        .user-list {
+            margin-top: 20px;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .container {
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #666;
-            font-size: 18px;
-            margin-bottom: 40px;
-        }
-
-        .logout-btn {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
+        .user-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .logout-btn:hover {
-            background-color: #0056b3;
+        .user-actions {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Você está logado!</h1>
-    <p>Bem-vindo à sua área logada. O que você gostaria de fazer a seguir?</p>
-    <a href="{% url 'logout' %}" class="logout-btn">Sair</a>
+
+<div class="user-list">
+    <h2>Lista de Usuários</h2>
+    {% for user in users %}
+    <div class="user-item">
+        <div>
+            <strong>Nome:</strong> {{ user.nome }} {{ user.sobrenome }}<br>
+            <strong>CEP:</strong> {{ user.cep }}<br>
+            <strong>Endereço:</strong> {{ user.endereco }}, {{ user.numero }} - {{ user.bairro }} - {{ user.cidade }}/{{ user.uf }}
+        </div>
+        <div class="user-actions">
+            <form method="post" action="{% url 'delete_user' user.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </form>
+            <a href="{% url 'edit_user' user.id %}"><button>Editar</button></a>
+        </div>
+    </div>
+    {% endfor %}
 </div>
+<a href="{% url 'logout' %}">Logout</a>
+
+<script>
+    function deleteUser(userId) {
+        if (confirm("Tem certeza de que deseja excluir este usuário?")) {
+            fetch('/delete/' + userId + '/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.reload(); // Atualiza a página após a exclusão
+                }
+            })
+            .catch(error => console.error('Erro ao excluir usuário:', error));
+        }
+    }
+</script>
+
 </body>
 </html>

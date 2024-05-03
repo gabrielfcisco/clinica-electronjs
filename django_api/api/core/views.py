@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from core.forms import CustomUserCreationForm
+from core.models import CustomUser
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
@@ -38,8 +39,11 @@ def cadastrar(request):
     return render(request, 'cadastro.html', {'form_usuario': form_usuario})
 
 def getUsers(request):
+    if not request.user.is_authenticated:
+        # Se o usuário não estiver autenticado, redirecione-o para a página de login
+        return redirect(reverse('login'))
     users = CustomUser.objects.all()
-    return render(request, '[nome].html', {'users': users})
+    return render(request, 'index.html', {'users': users})
 
 def editUsers(request, user_id):
     # Recupere o usuário existente pelo ID
@@ -47,12 +51,25 @@ def editUsers(request, user_id):
 
     if request.method == "POST":
         # Preencha o formulário com os dados do usuário e dados POST
-        form = CustomUserForm(request.POST, instance=usuario)
+        form = CustomUserCreationForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('listar_usuarios')
+            return redirect('index')
     else:
         # Preencha o formulário com os dados do usuário existente
-        form = CustomUserForm(instance=user)
+        form = CustomUserCreationForm(instance=user)
 
-    return render(request, '[nome].html', {'form_usuario': form})
+    return render(request, 'editar.html', {'form_usuario': form})
+
+def delete_user(request, user_id):
+    if not request.user.is_authenticated:
+        # Se o usuário não estiver autenticado, redirecione-o para a página de login
+        return redirect(reverse('login'))
+
+    user = get_object_or_404(CustomUser, pk=user_id)
+    
+    if request.method == 'POST':
+        user.delete()
+        return redirect('index')
+
+    return render(request, 'index.html', {'user': user})
