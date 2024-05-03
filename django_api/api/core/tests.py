@@ -31,7 +31,11 @@ class CustomUserTestCase(TestCase):
                 "endereco":self.user.endereco, "numero":self.user.numero, "bairro":self.user.bairro}
         response = self.client.post(reverse('cadastrar'), data)
         self.assertEqual(response.status_code, 302)
+<<<<<<< Updated upstream
         #self.assertRedirects(response, reverse('index'),status_code=302, target_status_code=200, fetch_redirect_response=True)
+=======
+        # self.assertRedirects(response, 'index',status_code=302, target_status_code=200, fetch_redirect_response=True)
+>>>>>>> Stashed changes
 
     def testuserEdit(self):
         c = Client()
@@ -44,9 +48,10 @@ class CustomUserTestCase(TestCase):
     def testUserDelete(self):
         c = Client()
         c.login(username="heitorscheidt", password="1234")
-        response = self.client.post(reverse('delete_user', args=[self.user.pk]))
-        #self.assertFalse(CustomUser.objects.filter(pk=self.user.pk).exists())
-        usuarios = CustomUser.objects.filter(pk=self.user.pk)
-        self.assertEqual(usuarios.count(), 0)
-        self.assertRedirects(response, reverse('index'))
+        print("Antes da exclusão:", CustomUser.objects.filter(pk=self.user.pk).exists())  # Verificar se o usuário existe antes da exclusão
+        response = c.post(reverse('delete_user', args=[self.user.pk]))
+        print("Depois da exclusão:", CustomUser.objects.filter(pk=self.user.pk).exists())  # Verificar se o usuário existe após a exclusão
+        self.assertFalse(CustomUser.objects.filter(pk=self.user.pk).exists())
+        self.assertRedirects(response, reverse('home'))
+
 
